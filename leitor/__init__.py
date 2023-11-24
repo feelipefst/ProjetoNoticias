@@ -2,7 +2,7 @@ from jornalista import *
 from geral import *
 from jornalista import *
 
-def menu_leitor(emailusuario, materias):
+def menu_leitor(emailusuario, materias, tipo_usuario):
     while True:
 
         print("-" * 30)
@@ -16,11 +16,11 @@ def menu_leitor(emailusuario, materias):
         opcao = input('Digite uma opção: ')
 
         if (opcao == '1'):
-            geral.listar_materias(materias)
+            geral.listar_materias(materias, tipo_usuario)
         elif (opcao == '2'):
-            geral.comentar_materia(emailusuario, materias)
+            geral.comentar_materia(emailusuario, materias, tipo_usuario)
         elif (opcao == '3'):
-            geral.curtir_materia(emailusuario, materias)
+            geral.curtir_materia(emailusuario, materias, tipo_usuario)
         elif (opcao == '4'):
             print('Saindo do sistema')
             break

@@ -17,16 +17,16 @@ def fazer_login(usuarios_cadastrados, materias, idmateria):
         if (usuario['email'] == email and usuario['senha'] == senha):
 
             if (usuario['tipo'] == TIPO_JORNALISTA):
-                menu_jornalista(email, materias, idmateria)
+                menu_jornalista(email, materias, idmateria, usuario['tipo'])
 
             elif (usuario['tipo'] == TIPO_LEITOR):
-                menu_leitor(email, materias)
+                menu_leitor(email, materias,usuario['tipo'])
 
         else:
             print('Credenciais inválidas')
 
 
-def comentar_materia(emailusuario, materias):
+def comentar_materia(emailusuario, materias, tipo_usuario):
 
     listar_materias(materias)
 
@@ -54,18 +54,14 @@ def comentar_materia(emailusuario, materias):
         print(f'Notícia com ID {id_a_comentar} não encontrada.')
 
 
-def curtir_materia(emailusuario, materias):
+def curtir_materia(emailusuario, materias, tipo_usuario):
 
-    listar_materias(materias)
+    listar_materias(materias, tipo_usuario)
 
     if len(materias) == 0:
         return
 
     id_noticia_curtir = input('Digite o ID da notícia que deseja curtir: ')
-
-    #if 'curtidas' in emailusuario:
-    #   print('Você já curtiu esta notícia anteriormente.')
-    #  return
 
     if not id_noticia_curtir.isdigit():
         print('ID inválido. Digite um número válido.')
@@ -75,25 +71,18 @@ def curtir_materia(emailusuario, materias):
     for materia in materias:
         if emailusuario in materia['curtidas']:
             print(f'Você já curtiu esta notícia anteriormente.')
+            return
         else:
+
             materia['curtidas'].append(emailusuario)
+            print('Curtida adicionada com sucesso')
+            break
     else:
         print(f'Matéria com ID {id_noticia_curtir} não encontrada.')
-
-        #
-        # for i in materia['curtidas']:
-        #     if(i == emailusuario):
-        #         print(f'Você já curtiu esta notícia anteriormente.')
-        #         return
-        #
-        # if(materia['id'] == id_noticia_curtir):
-        #     materia['curtidas'].append(emailusuario)
-        #     print('Curtida adicionada com sucesso')
-        #     break
+        return
 
 
-
-def listar_materias(materias):
+def listar_materias(materias, tipo_usuario):
 
     if len(materias) == 0:
         print('Não há matérias disponíveis no momento')
@@ -107,10 +96,10 @@ def listar_materias(materias):
             print(f"Título: {materia['titulo']}")
             print(f"Autor: {materia['autor']}")
             print(f"Data: {materia['data']}")
-            print(f"Conteúdo: {materia['conteudo']}\n")
+            print(f"Conteúdo: {materia['conteudo']}")
 
             exibirComentarios(materia)
-            exibirCurtidas(materia)
+            exibirCurtidas(materia, tipo_usuario)
 
 
 def cadastrar(usuarios_cadastrados):

@@ -6,7 +6,7 @@ from geral import *
 data_atual = date.today()
 
 
-def menu_jornalista(emailusuario, materias, idmateria):
+def menu_jornalista(emailusuario, materias, idmateria, tipo_usuario):
     while True:
         print("-" * 30)
         print('|          Opções:           |')
@@ -22,13 +22,13 @@ def menu_jornalista(emailusuario, materias, idmateria):
         if (opcao == '1'):
             escrever_materia(emailusuario, materias, idmateria)
         elif (opcao == '2'):
-            geral.listar_materias(materias)
+            geral.listar_materias(materias, tipo_usuario)
         elif (opcao == '3'):
-            excluir_materia(emailusuario, materias)
+            excluir_materia(emailusuario, materias, tipo_usuario)
         elif (opcao == '4'):
-            editar_materia(emailusuario, materias)
+            editar_materia(emailusuario, materias, tipo_usuario)
         elif (opcao == '5'):
-            geral.comentar_materia(emailusuario, materias)
+            geral.comentar_materia(emailusuario, materias, tipo_usuario)
         elif (opcao == '6'):
             print('Saindo do sistema')
             break
@@ -58,12 +58,12 @@ def escrever_materia(email, materias, idmateria):
     print('Matéria escrita com sucesso!')
 
 
-def excluir_materia(emailusuario, materias):
+def excluir_materia(emailusuario, materias, tipo_usuario):
     if len(materias) == 0:
         print('Não há matérias disponíveis para excluir.')
         return
 
-    geral.listar_materias(materias)
+    geral.listar_materias(materias, tipo_usuario)
 
     id_a_excluir = input('Digite o ID da notícia: ')
 
@@ -83,9 +83,9 @@ def excluir_materia(emailusuario, materias):
     print(f'Noticia com ID {id_a_excluir} não encontrada. ')
 
 
-def editar_materia(emailusuario, materias):
+def editar_materia(emailusuario, materias, tipo_usuario):
 
-    geral.listar_materias(materias)
+    geral.listar_materias(materias, tipo_usuario)
 
     id_a_editar = input('Qual id da matéria a ser editada: ')
 
@@ -126,8 +126,13 @@ def exibirComentarios(materias):
                 print(f'Comentario: {comentario["comentario"]}')
 
 
-def exibirCurtidas(materias):
+def exibirCurtidas(materias, tipo_usuario):
 
     if len(materias['curtidas']) > 0:
+        if (tipo_usuario == 'leitor'):
+            print(f'Curtidas: {len(materias["curtidas"])}')
+
+        else:
+            print(f'Curtidas: {len(materias["curtidas"])}')
             for curtida in materias['curtidas']:
-                print(f'Matéria curtida por: {curtida}')
+                print(f'\nMatéria curtida por: {curtida}')
