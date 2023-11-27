@@ -3,6 +3,8 @@ from geral import *
 from jornalista import *
 from leitor import *
 
+"aqui"
+
 usuarios_cadastrados = [{
         'nome': 'Felipe',
         'email': 'felipe@net.com',
