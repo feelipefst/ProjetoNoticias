@@ -1,6 +1,6 @@
-from jornalista import *
 from geral import *
 from jornalista import *
+
 
 def menu_leitor(emailusuario, materias, tipo_usuario):
     while True:
@@ -11,7 +11,8 @@ def menu_leitor(emailusuario, materias, tipo_usuario):
         print('| 1 - Visualizar matérias    |')
         print('| 2 - Comentar notícia       |')
         print('| 3 - Curtir notícia         |')
-        print('| 4 - Sair                   |')
+        print('| 4 - Buscar matérias        |')
+        print('| 5 - Sair                   |')
         print("-" * 30)
         opcao = input('Digite uma opção: ')
 
@@ -22,6 +23,9 @@ def menu_leitor(emailusuario, materias, tipo_usuario):
         elif (opcao == '3'):
             geral.curtir_materia(emailusuario, materias, tipo_usuario)
         elif (opcao == '4'):
+            comentario = input('Digite o termo para busca: ')
+            geral.buscar_materias(materias, tipo_usuario, comentario)
+        elif (opcao == '5'):
             print('Saindo do sistema')
             break
         else:

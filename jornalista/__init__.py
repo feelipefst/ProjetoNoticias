@@ -15,7 +15,8 @@ def menu_jornalista(emailusuario, materias, idmateria, tipo_usuario):
         print('| 3 - Excluir matéria        |')
         print('| 4 - Editar matéria         |')
         print('| 5 - Comentar matérias      |')
-        print('| 6 - Sair                   |')
+        print('| 6 - Buscar matérias        |')
+        print('| 7 - Sair                   |')
         print("-" * 30)
         opcao = input('Digite uma opção: ')
 
@@ -30,6 +31,9 @@ def menu_jornalista(emailusuario, materias, idmateria, tipo_usuario):
         elif (opcao == '5'):
             geral.comentar_materia(emailusuario, materias, tipo_usuario)
         elif (opcao == '6'):
+            comentario = input('Digite o termo para busca: ')
+            geral.buscar_materias(materias, tipo_usuario, comentario)
+        elif (opcao == '7'):
             print('Saindo do sistema')
             break
         else:

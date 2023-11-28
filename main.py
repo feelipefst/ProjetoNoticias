@@ -1,9 +1,6 @@
-from art import *
 from geral import *
 from jornalista import *
 from leitor import *
-
-"aqui"
 
 usuarios_cadastrados = [{
         'nome': 'Felipe',
@@ -33,7 +30,26 @@ materias = [{
         'autor': 'felipe@net.com',
         'comentarios': list(),
         'curtidas': list()
-    }]
+    },
+    {
+        'id': 2,
+        'titulo': 'flamengo',
+        'conteudo': 'o vasco ganhou',
+        'data': '18/11/2023',
+        'autor': 'felipe@net.com',
+        'comentarios': list(),
+        'curtidas': list()
+    },
+    {
+        'id': 3,
+        'titulo': 'vasco',
+        'conteudo': 'o flamengo ganhou',
+        'data': '18/11/2023',
+        'autor': 'felipe@net.com',
+        'comentarios': list(),
+        'curtidas': list()
+    }
+]
 usuario_logado = []
 
 while True:
@@ -61,5 +77,3 @@ while True:
     else:
         print("Opção inválida. Tente novamente.")
 
-    # if __name__ == "__main__":
-    #    main()

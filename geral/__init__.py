@@ -28,7 +28,7 @@ def fazer_login(usuarios_cadastrados, materias, idmateria):
 
 def comentar_materia(emailusuario, materias, tipo_usuario):
 
-    listar_materias(materias)
+    listar_materias(materias, tipo_usuario)
 
     if len(materias) == 0:
         return
@@ -90,6 +90,7 @@ def listar_materias(materias, tipo_usuario):
 
     else:
         print(f'\n\nLista de matérias:')
+
         for materia in materias:
             print('-' * 40)
             print(f"ID: {materia['id']}")
@@ -100,6 +101,28 @@ def listar_materias(materias, tipo_usuario):
 
             exibirComentarios(materia)
             exibirCurtidas(materia, tipo_usuario)
+
+
+def buscar_materias(materias, tipo_usuario, comentario):
+
+    if len(materias) == 0:
+        print('Não há matérias disponíveis no momento')
+        return
+
+    else:
+        print(f'\n\nLista de matérias:')
+
+        for materia in materias:
+            if (comentario in materia['titulo'] or comentario in materia['conteudo']):
+                print('-' * 40)
+                print(f"ID: {materia['id']}")
+                print(f"Título: {materia['titulo']}")
+                print(f"Autor: {materia['autor']}")
+                print(f"Data: {materia['data']}")
+                print(f"Conteúdo: {materia['conteudo']}")
+
+                exibirComentarios(materia)
+                exibirCurtidas(materia, tipo_usuario)
 
 
 def cadastrar(usuarios_cadastrados):
