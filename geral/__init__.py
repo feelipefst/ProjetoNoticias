@@ -24,6 +24,7 @@ def fazer_login(usuarios_cadastrados, materias, idmateria):
 
         else:
             print('Credenciais inválidas')
+            break
 
 
 def comentar_materia(emailusuario, materias, tipo_usuario):
@@ -129,7 +130,7 @@ def cadastrar(usuarios_cadastrados):
     print("-" * 30)
     while True:
         nome = input('Nome: ')
-        if nome.strip():  # Verifica se a string não está vazia após remover espaços em branco
+        if nome.strip():
             break
         else:
             print('Não pode ficar vazio tente novamente')

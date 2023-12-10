@@ -23,7 +23,7 @@ def menu_jornalista(emailusuario, materias, idmateria, tipo_usuario):
         if (opcao == '1'):
             escrever_materia(emailusuario, materias, idmateria)
         elif (opcao == '2'):
-            geral.listar_materias(materias, tipo_usuario)
+            sub_materias(emailusuario, materias, tipo_usuario)
         elif (opcao == '3'):
             excluir_materia(emailusuario, materias, tipo_usuario)
         elif (opcao == '4'):
@@ -38,6 +38,62 @@ def menu_jornalista(emailusuario, materias, idmateria, tipo_usuario):
             break
         else:
             print('Opção inválida. Selecione novamente')
+
+
+def sub_materias(emailusuario, materias, tipo_usuario):
+    while True:
+
+        print("-" * 42)
+        print('|              Opções:                   |')
+        print('| 1 - Visualizar todas as matérias       |')
+        print('| 2 - Visualizar apenas minhas matérias  |')
+        print('| 3 - Sair                               |')
+        print("-" * 42)
+        op = int(input('Digite uma opção: '))
+
+        if (op == 1):
+            geral.listar_materias(materias, tipo_usuario)
+
+            print("-" * 36)
+            print('| 1 - Curtir notícia               |')
+            print('| 2 - Organizar por mais curtidas  |')
+            print('| 3 - Sair                         |')
+            print("-" * 36)
+
+            op = int(input(f'\nDigite uma opção: '))
+
+            if (op == 1):
+                geral.curtir_materia(emailusuario, materias, tipo_usuario)
+                break
+            elif (op == 2):
+                organizar_mais_curtidas(materias, tipo_usuario)
+            elif (op == 3):
+                break
+            else:
+                print('Opção Invalida')
+
+        elif (op == 2):
+            minhas_materias()
+
+            print(f'\nDeseja organizar pelas mais curtidas? 1 - Sim | 2 - Não ')
+            op = int(input(f'\nDigite uma opção: '))
+
+            if (op == 1):
+                organizar_mais_curtidas(materias, tipo_usuario)
+                break
+            elif (op == 2):
+                break
+            else:
+                print('Opção Invalida')
+
+        elif (op == 3):
+            break
+
+        else:
+            print('Opção Invalida')
+
+
+
 
 
 def escrever_materia(email, materias, idmateria):
@@ -139,4 +195,18 @@ def exibirCurtidas(materias, tipo_usuario):
         else:
             print(f'Curtidas: {len(materias["curtidas"])}')
             for curtida in materias['curtidas']:
-                print(f'\nMatéria curtida por: {curtida}')
+                print(f'Matéria curtida por: {curtida}')
+
+def organizar_mais_curtidas(materias, tipo_usuario):
+    for materia in materias:
+        n = len(materia['curtidas'])
+        print(n)
+
+        for j in range(0, n - 1):
+            if materia['curtidas'][j] < materia['curtidas'][j + 1]:
+                aux = materias[j]
+                print('aqui', aux)
+                materias[j] = materias[j + 1]
+                materias[j + 1] = aux
+
+        print(materia)

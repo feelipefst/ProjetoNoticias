@@ -21,7 +21,7 @@ usuarios_cadastrados = [{
         'tipo': 'leitor',
         'curtidas': []
     }]
-idmateria = [0]
+idmateria = [3]
 materias = [{
         'id': 1,
         'titulo': 'test',
@@ -38,7 +38,7 @@ materias = [{
         'data': '18/11/2023',
         'autor': 'felipe@net.com',
         'comentarios': list(),
-        'curtidas': list()
+        'curtidas': ['joao@net.com']
     },
     {
         'id': 3,
@@ -47,7 +47,7 @@ materias = [{
         'data': '18/11/2023',
         'autor': 'felipe@net.com',
         'comentarios': list(),
-        'curtidas': list()
+        'curtidas': ['joao@net.com', 'felipe@net.com', 'jose@net.com']
     }
 ]
 usuario_logado = []
