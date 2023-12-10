@@ -73,13 +73,13 @@ def sub_materias(emailusuario, materias, tipo_usuario):
                 print('Opção Invalida')
 
         elif (op == 2):
-            minhas_materias()
+            minhas_materias(materias, tipo_usuario, emailusuario)
 
             print(f'\nDeseja organizar pelas mais curtidas? 1 - Sim | 2 - Não ')
             op = int(input(f'\nDigite uma opção: '))
 
             if (op == 1):
-                organizar_mais_curtidas(materias, tipo_usuario)
+                organizar_mais_curtidas_user(materias, tipo_usuario, emailusuario)
                 break
             elif (op == 2):
                 break
@@ -91,9 +91,6 @@ def sub_materias(emailusuario, materias, tipo_usuario):
 
         else:
             print('Opção Invalida')
-
-
-
 
 
 def escrever_materia(email, materias, idmateria):
@@ -198,15 +195,50 @@ def exibirCurtidas(materias, tipo_usuario):
                 print(f'Matéria curtida por: {curtida}')
 
 def organizar_mais_curtidas(materias, tipo_usuario):
+    new_list = sorted(materias, key=lambda materias: len(materias['curtidas']), reverse=True)
+
+    for materia in new_list:
+        print('-' * 40)
+        print(f"ID: {materia['id']}")
+        print(f"Título: {materia['titulo']}")
+        print(f"Autor: {materia['autor']}")
+        print(f"Data: {materia['data']}")
+        print(f"Conteúdo: {materia['conteudo']}")
+
+        exibirComentarios(materia)
+        exibirCurtidas(materia, tipo_usuario)
+
+def minhas_materias(materias, tipo_usuario, emailusuario):
+
     for materia in materias:
-        n = len(materia['curtidas'])
-        print(n)
+        if (materia['autor'] == emailusuario):
 
-        for j in range(0, n - 1):
-            if materia['curtidas'][j] < materia['curtidas'][j + 1]:
-                aux = materias[j]
-                print('aqui', aux)
-                materias[j] = materias[j + 1]
-                materias[j + 1] = aux
+            print('-' * 40)
+            print(f"ID: {materia['id']}")
+            print(f"Título: {materia['titulo']}")
+            print(f"Autor: {materia['autor']}")
+            print(f"Data: {materia['data']}")
+            print(f"Conteúdo: {materia['conteudo']}")
 
-        print(materia)
+            exibirComentarios(materia)
+            exibirCurtidas(materia, tipo_usuario)
+
+        else:
+            print('Nenhuma materia a ser exibida')
+
+def organizar_mais_curtidas_user(materias, tipo_usuario, emailusuario):
+
+    new_list = sorted(materias, key=lambda materias: len(materias['curtidas']), reverse=True)
+
+    for materia in new_list:
+        if (materia['autor'] == emailusuario):
+
+            print('-' * 40)
+            print(f"ID: {materia['id']}")
+            print(f"Título: {materia['titulo']}")
+            print(f"Autor: {materia['autor']}")
+            print(f"Data: {materia['data']}")
+            print(f"Conteúdo: {materia['conteudo']}")
+
+            exibirComentarios(materia)
+            exibirCurtidas(materia, tipo_usuario)

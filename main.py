@@ -29,16 +29,16 @@ materias = [{
         'data': '18/11/2023',
         'autor': 'felipe@net.com',
         'comentarios': list(),
-        'curtidas': list()
+        'curtidas': ['joao@net.com']
     },
     {
         'id': 2,
         'titulo': 'flamengo',
         'conteudo': 'o vasco ganhou',
         'data': '18/11/2023',
-        'autor': 'felipe@net.com',
+        'autor': 'klelver@net.com',
         'comentarios': list(),
-        'curtidas': ['joao@net.com']
+        'curtidas': list()
     },
     {
         'id': 3,
