@@ -1,6 +1,6 @@
 from geral import *
 from jornalista import *
-
+import interacoes
 
 def menu_leitor(emailusuario, materias, tipo_usuario):
     while True:
@@ -19,9 +19,9 @@ def menu_leitor(emailusuario, materias, tipo_usuario):
         if (opcao == '1'):
             geral.listar_materias(materias, tipo_usuario)
         elif (opcao == '2'):
-            geral.comentar_materia(emailusuario, materias, tipo_usuario)
+            interacoes.comentar_materia(emailusuario, materias, tipo_usuario)
         elif (opcao == '3'):
-            geral.curtir_materia(emailusuario, materias, tipo_usuario)
+            interacoes.curtir_materia(emailusuario, materias, tipo_usuario)
         elif (opcao == '4'):
             comentario = input('Digite o termo para busca: ')
             geral.buscar_materias(materias, tipo_usuario, comentario)

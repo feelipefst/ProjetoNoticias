@@ -1,5 +1,6 @@
 from jornalista import *
 from leitor import *
+import interacoes
 
 
 TIPO_JORNALISTA = 'jornalista'
@@ -27,60 +28,7 @@ def fazer_login(usuarios_cadastrados, materias, idmateria):
             break
 
 
-def comentar_materia(emailusuario, materias, tipo_usuario):
 
-    listar_materias(materias, tipo_usuario)
-
-    if len(materias) == 0:
-        return
-
-    id_a_comentar = input('Digite o id da matéria que deseja comentar: ')
-
-    if not id_a_comentar.isdigit():
-        print('ID inválido. Digite um número válido.')
-        return
-
-    id_a_comentar = int(id_a_comentar)
-
-    for materia in materias:
-        if materia['id'] == id_a_comentar:
-            comentario = input('Digite seu comentário: ')
-
-            materia['comentarios'].append({'usuario': emailusuario, 'comentario': comentario})
-
-            print('Comentário adicionado com sucesso.')
-            return
-
-    else:
-        print(f'Notícia com ID {id_a_comentar} não encontrada.')
-
-
-def curtir_materia(emailusuario, materias, tipo_usuario):
-
-    listar_materias(materias, tipo_usuario)
-
-    if len(materias) == 0:
-        return
-
-    id_noticia_curtir = input('Digite o ID da notícia que deseja curtir: ')
-
-    if not id_noticia_curtir.isdigit():
-        print('ID inválido. Digite um número válido.')
-        return
-    id_noticia_curtir = int(id_noticia_curtir)
-
-    for materia in materias:
-        if emailusuario in materia['curtidas']:
-            print(f'Você já curtiu esta notícia anteriormente.')
-            return
-        else:
-
-            materia['curtidas'].append(emailusuario)
-            print('Curtida adicionada com sucesso')
-            break
-    else:
-        print(f'Matéria com ID {id_noticia_curtir} não encontrada.')
-        return
 
 
 def listar_materias(materias, tipo_usuario):
@@ -100,8 +48,8 @@ def listar_materias(materias, tipo_usuario):
             print(f"Data: {materia['data']}")
             print(f"Conteúdo: {materia['conteudo']}")
 
-            exibirComentarios(materia)
-            exibirCurtidas(materia, tipo_usuario)
+            interacoes.exibirComentarios(materia)
+            interacoes.exibirCurtidas(materia, tipo_usuario)
 
 
 def buscar_materias(materias, tipo_usuario, comentario):
@@ -122,8 +70,8 @@ def buscar_materias(materias, tipo_usuario, comentario):
                 print(f"Data: {materia['data']}")
                 print(f"Conteúdo: {materia['conteudo']}")
 
-                exibirComentarios(materia)
-                exibirCurtidas(materia, tipo_usuario)
+                interacoes.exibirComentarios(materia)
+                interacoes.exibirCurtidas(materia, tipo_usuario)
 
 
 def cadastrar(usuarios_cadastrados):
@@ -205,3 +153,24 @@ def cadastrar_novo_usuario(usuarios_cadastrados, novo_usuario):
 
     usuarios_cadastrados.append(novo_usuario)
     print('Usuário cadastrado')
+
+
+def salvar_arquivo(materias, emailusuario, tipo_usuario):
+
+    f = open(f'{emailusuario}.txt', 'a')
+
+    for materia in materias:
+        if (materia['autor'] == emailusuario):
+
+            f.write('-' * 40)
+            f.write(f"\nID: {materia['id']}\n")
+            f.write(f"Título: {materia['titulo']}\n")
+            f.write(f"Autor: {materia['autor']}\n")
+            f.write(f"Data: {materia['data']}\n")
+            f.write(f"Conteúdo: {materia['conteudo']}\n")
+
+            #f.write(exibirComentarios(materia))
+            #f.write(exibirCurtidas(materia, tipo_usuario))
+
+    f.close()
+    print('Arquivo salvo')
