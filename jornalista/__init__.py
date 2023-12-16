@@ -1,9 +1,7 @@
 from datetime import date
-
 import geral
 from geral import *
 import interacoes
-
 data_atual = date.today()
 
 
@@ -50,7 +48,6 @@ def menu_jornalista(emailusuario, materias, idmateria, tipo_usuario, usuario_log
 
 def sub_materias(emailusuario, materias, tipo_usuario, usuario_logado):
     while True:
-
         print("-" * 42)
         print('|              Opções:                   |')
         print('| 1 - Visualizar todas as matérias       |')
@@ -61,15 +58,12 @@ def sub_materias(emailusuario, materias, tipo_usuario, usuario_logado):
 
         if (op == 1):
             geral.listar_materias(materias, tipo_usuario, usuario_logado)
-
             print("-" * 36)
             print('| 1 - Curtir notícia               |')
             print('| 2 - Organizar por mais curtidas  |')
             print('| 3 - Sair                         |')
             print("-" * 36)
-
             op = int(input(f'\nDigite uma opção: '))
-
             if (op == 1):
                 interacoes.curtir_materia(emailusuario, materias, tipo_usuario, usuario_logado)
                 break
@@ -79,13 +73,10 @@ def sub_materias(emailusuario, materias, tipo_usuario, usuario_logado):
                 break
             else:
                 print('Opção Invalida')
-
         elif (op == 2):
             minhas_materias(materias, tipo_usuario, emailusuario, usuario_logado)
-
             print(f'\nDeseja organizar pelas mais curtidas? 1 - Sim | 2 - Não ')
             op = int(input(f'\nDigite uma opção: '))
-
             if (op == 1):
                 interacoes.organizar_mais_curtidas_user(materias, tipo_usuario, emailusuario, usuario_logado)
                 break
@@ -93,10 +84,8 @@ def sub_materias(emailusuario, materias, tipo_usuario, usuario_logado):
                 break
             else:
                 print('Opção Invalida')
-
         elif (op == 3):
             break
-
         else:
             print('Opção Invalida')
 
@@ -105,9 +94,7 @@ def escrever_materia(email, materias, idmateria):
     titulo = input('Digite o titulo da matéria: ')
     conteudo = input('Digite o texto: ')
     data_materia = '{}/{}/{}'.format(data_atual.day, data_atual.month, data_atual.year)
-
     idmateria[0] += 1
-
     materia = {
         'id': idmateria[0],
         'titulo': titulo,
@@ -117,9 +104,7 @@ def escrever_materia(email, materias, idmateria):
         'comentarios': list(),
         'curtidas': list()
     }
-
     materias.append(materia)
-
     print('Matéria escrita com sucesso!')
 
 
@@ -127,16 +112,12 @@ def excluir_materia(emailusuario, materias, tipo_usuario):
     if len(materias) == 0:
         print('Não há matérias disponíveis para excluir.')
         return
-
     geral.listar_materias(materias, tipo_usuario)
-
     id_a_excluir = input('Digite o ID da notícia: ')
-
     if not id_a_excluir.isdigit():
         print('ID inválido. Digite um número válido')
         return
     id_a_excluir = int(id_a_excluir)
-
     for materia in materias:
         if materia['id'] == id_a_excluir:
             if emailusuario == materia['autor']:
@@ -149,32 +130,24 @@ def excluir_materia(emailusuario, materias, tipo_usuario):
 
 
 def editar_materia(emailusuario, materias, tipo_usuario, usuario_logado):
-
     geral.listar_materias(materias, tipo_usuario, usuario_logado)
-
     id_a_editar = input('Qual id da matéria a ser editada: ')
-
     if not id_a_editar.isdigit():
         print('ID inválido. Digite um número válido.')
         return
     id_a_editar = int(id_a_editar)
-
     for materia in materias:
         if materia['id'] == id_a_editar and emailusuario == materia['autor']:
-
             print(f'Editando matéria com ID {id_a_editar} .')
             novo_titulo = input('Digite o novo título: ')
             novo_titulo = (f'Editada - {novo_titulo}')
             novo_conteudo = input('Digite o novo conteúdo: ')
             nova_data = '{}/{}/{}'.format(data_atual.day, data_atual.month, data_atual.year)
-
             materia['titulo'] = novo_titulo
             materia['conteudo'] = novo_conteudo
             materia['data'] = nova_data
-
             print(f'Matéria com ID {id_a_editar} editada com sucesso.')
             break
-
         else:
             print('Você não tem permissão para editar esta matéria')
             break
@@ -186,16 +159,13 @@ def minhas_materias(materias, tipo_usuario, emailusuario, usuario_logado):
 
     for materia in materias:
         if (materia['autor'] == emailusuario):
-
             print('-' * 40)
             print(f"ID: {materia['id']}")
             print(f"Título: {materia['titulo']}")
             print(f"Autor: {materia['autor']}")
             print(f"Data: {materia['data']}")
             print(f"Conteúdo: {materia['conteudo']}")
-
             interacoes.exibirComentarios(materia)
             interacoes.exibirCurtidas(materia, tipo_usuario, usuario_logado)
-
         else:
             print('Nenhuma materia a ser exibida')
