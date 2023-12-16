@@ -7,7 +7,7 @@ TIPO_JORNALISTA = 'jornalista'
 TIPO_LEITOR = 'leitor'
 
 
-def fazer_login(usuarios_cadastrados, materias, idmateria):
+def fazer_login(usuarios_cadastrados, materias, idmateria, usuario_logado):
     email = input('Email: ')
     senha = input('Senha: ')
 
@@ -16,22 +16,20 @@ def fazer_login(usuarios_cadastrados, materias, idmateria):
             continue
 
         if (usuario['email'] == email and usuario['senha'] == senha):
+            usuario_logado.append(usuario['email'])
 
             if (usuario['tipo'] == TIPO_JORNALISTA):
-                menu_jornalista(email, materias, idmateria, usuario['tipo'])
+                menu_jornalista(email, materias, idmateria, usuario['tipo'], usuario_logado)
 
             elif (usuario['tipo'] == TIPO_LEITOR):
-                menu_leitor(email, materias,usuario['tipo'])
+                menu_leitor(email, materias,usuario['tipo'], usuario_logado)
 
         else:
             print('Credenciais inválidas')
             break
 
 
-
-
-
-def listar_materias(materias, tipo_usuario):
+def listar_materias(materias, tipo_usuario, usuario_logado):
 
     if len(materias) == 0:
         print('Não há matérias disponíveis no momento')
@@ -49,10 +47,10 @@ def listar_materias(materias, tipo_usuario):
             print(f"Conteúdo: {materia['conteudo']}")
 
             interacoes.exibirComentarios(materia)
-            interacoes.exibirCurtidas(materia, tipo_usuario)
+            interacoes.exibirCurtidas(materia, tipo_usuario, usuario_logado)
 
 
-def buscar_materias(materias, tipo_usuario, comentario):
+def buscar_materias(materias, tipo_usuario, comentario, usuario_logado):
 
     if len(materias) == 0:
         print('Não há matérias disponíveis no momento')
@@ -71,7 +69,7 @@ def buscar_materias(materias, tipo_usuario, comentario):
                 print(f"Conteúdo: {materia['conteudo']}")
 
                 interacoes.exibirComentarios(materia)
-                interacoes.exibirCurtidas(materia, tipo_usuario)
+                interacoes.exibirCurtidas(materia, tipo_usuario, usuario_logado)
 
 
 def cadastrar(usuarios_cadastrados):
@@ -155,7 +153,7 @@ def cadastrar_novo_usuario(usuarios_cadastrados, novo_usuario):
     print('Usuário cadastrado')
 
 
-def salvar_arquivo(materias, emailusuario, tipo_usuario):
+def salvar_arquivo(materias, emailusuario):
 
     f = open(f'{emailusuario}.txt', 'a')
 
@@ -168,9 +166,6 @@ def salvar_arquivo(materias, emailusuario, tipo_usuario):
             f.write(f"Autor: {materia['autor']}\n")
             f.write(f"Data: {materia['data']}\n")
             f.write(f"Conteúdo: {materia['conteudo']}\n")
-
-            #f.write(exibirComentarios(materia))
-            #f.write(exibirCurtidas(materia, tipo_usuario))
 
     f.close()
     print('Arquivo salvo')

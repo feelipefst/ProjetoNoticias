@@ -2,8 +2,9 @@ from jornalista import *
 from leitor import *
 from geral import *
 
-def curtir_materia(emailusuario, materias, tipo_usuario):
-    listar_materias(materias, tipo_usuario)
+def curtir_materia(emailusuario, materias, tipo_usuario, usuario_logado):
+
+    geral.listar_materias(materias, tipo_usuario, usuario_logado)
 
     if len(materias) == 0:
         return
@@ -16,21 +17,29 @@ def curtir_materia(emailusuario, materias, tipo_usuario):
     id_noticia_curtir = int(id_noticia_curtir)
 
     for materia in materias:
-        if emailusuario in materia['curtidas']:
-            print(f'Você já curtiu esta notícia anteriormente.')
-            return
-        else:
+        if materia['id'] == id_noticia_curtir:
+            if len(materia['curtidas']) > 0:
+                for i in materia['curtidas']:
+                    print('aoihddad', i)
+                    if emailusuario == i:
+                        print(f'Você já curtiu esta notícia anteriormente.')
+                        return
+                    else:
+                        materia['curtidas'].append(emailusuario)
+                        print('Curtida adicionada com sucesso')
+                        break
+            else:
+                materia['curtidas'].append(emailusuario)
+                print('Curtida adicionada com sucesso')
+                break
 
-            materia['curtidas'].append(emailusuario)
-            print('Curtida adicionada com sucesso')
-            break
     else:
         print(f'Matéria com ID {id_noticia_curtir} não encontrada.')
-        return
 
 
-def comentar_materia(emailusuario, materias, tipo_usuario):
-    listar_materias(materias, tipo_usuario)
+
+def comentar_materia(emailusuario, materias, tipo_usuario, usuario_logado):
+    geral.listar_materias(materias, tipo_usuario, usuario_logado)
 
     if len(materias) == 0:
         return
@@ -62,18 +71,21 @@ def exibirComentarios(materias):
             print(f'Comentario: {comentario["comentario"]}')
 
 
-def exibirCurtidas(materias, tipo_usuario):
+def exibirCurtidas(materias, tipo_usuario, usuario_logado):
     if len(materias['curtidas']) > 0:
         if (tipo_usuario == 'leitor'):
             print(f'Curtidas: {len(materias["curtidas"])}')
 
         else:
-            print(f'Curtidas: {len(materias["curtidas"])}')
-            for curtida in materias['curtidas']:
-                print(f'Matéria curtida por: {curtida}')
+            if (materias['autor'] == usuario_logado[0]):
+                print(f'Curtidas: {len(materias["curtidas"])}')
+                for curtida in materias['curtidas']:
+                    print(f'Matéria curtida por: {curtida}')
 
+            else:
+                print(f'Curtidas: {len(materias["curtidas"])}')
 
-def organizar_mais_curtidas(materias, tipo_usuario):
+def organizar_mais_curtidas(materias, tipo_usuario, usuario_logado):
     new_list = sorted(materias, key=lambda materias: len(materias['curtidas']), reverse=True)
 
     for materia in new_list:
@@ -85,10 +97,10 @@ def organizar_mais_curtidas(materias, tipo_usuario):
         print(f"Conteúdo: {materia['conteudo']}")
 
         exibirComentarios(materia)
-        exibirCurtidas(materia, tipo_usuario)
+        exibirCurtidas(materia, tipo_usuario, usuario_logado)
 
 
-def organizar_mais_curtidas_user(materias, tipo_usuario, emailusuario):
+def organizar_mais_curtidas_user(materias, tipo_usuario, emailusuario, usuario_logado):
     new_list = sorted(materias, key=lambda materias: len(materias['curtidas']), reverse=True)
 
     for materia in new_list:
@@ -101,4 +113,4 @@ def organizar_mais_curtidas_user(materias, tipo_usuario, emailusuario):
             print(f"Conteúdo: {materia['conteudo']}")
 
             exibirComentarios(materia)
-            exibirCurtidas(materia, tipo_usuario)
+            exibirCurtidas(materia, tipo_usuario, usuario_logado)

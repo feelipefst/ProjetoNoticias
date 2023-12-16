@@ -2,54 +2,9 @@ from geral import *
 from jornalista import *
 from leitor import *
 
-usuarios_cadastrados = [{
-        'nome': 'Felipe',
-        'email': 'felipe@net.com',
-        'senha': '12345a',
-        'tipo': 'jornalista',
-        'curtidas': []
-    },{
-        'nome': 'Joao',
-        'email': 'joao@net.com',
-        'senha': '12345a',
-        'tipo': 'jornalista',
-        'curtidas': []
-    },{
-        'nome': 'Rian',
-        'email': 'rian@net.com',
-        'senha': '12345a',
-        'tipo': 'leitor',
-        'curtidas': []
-    }]
-idmateria = [3]
-materias = [{
-        'id': 1,
-        'titulo': 'test',
-        'conteudo': 'teste',
-        'data': '18/11/2023',
-        'autor': 'felipe@net.com',
-        'comentarios': list(),
-        'curtidas': ['joao@net.com']
-    },
-    {
-        'id': 2,
-        'titulo': 'flamengo',
-        'conteudo': 'o vasco ganhou',
-        'data': '18/11/2023',
-        'autor': 'klelver@net.com',
-        'comentarios': list(),
-        'curtidas': list()
-    },
-    {
-        'id': 3,
-        'titulo': 'vasco',
-        'conteudo': 'o flamengo ganhou',
-        'data': '18/11/2023',
-        'autor': 'felipe@net.com',
-        'comentarios': list(),
-        'curtidas': ['joao@net.com', 'felipe@net.com', 'jose@net.com']
-    }
-]
+usuarios_cadastrados = []
+idmateria = [0]
+materias = []
 usuario_logado = []
 
 while True:
@@ -68,7 +23,7 @@ while True:
         cadastrar(usuarios_cadastrados)
 
     elif (opcao == '2'):
-        fazer_login(usuarios_cadastrados, materias, idmateria)
+        fazer_login(usuarios_cadastrados, materias, idmateria, usuario_logado)
 
     elif (opcao == '3'):
         print("Saindo do programa.")

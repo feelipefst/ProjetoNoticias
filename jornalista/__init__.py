@@ -7,7 +7,8 @@ import interacoes
 data_atual = date.today()
 
 
-def menu_jornalista(emailusuario, materias, idmateria, tipo_usuario):
+def menu_jornalista(emailusuario, materias, idmateria, tipo_usuario, usuario_logado):
+    print('AQUI', usuario_logado)
     while True:
         print("-" * 30)
         print('|          Opções:           |')
@@ -25,26 +26,27 @@ def menu_jornalista(emailusuario, materias, idmateria, tipo_usuario):
         if (opcao == '1'):
             escrever_materia(emailusuario, materias, idmateria)
         elif (opcao == '2'):
-            sub_materias(emailusuario, materias, tipo_usuario)
+            sub_materias(emailusuario, materias, tipo_usuario, usuario_logado)
         elif (opcao == '3'):
             excluir_materia(emailusuario, materias, tipo_usuario)
         elif (opcao == '4'):
-            editar_materia(emailusuario, materias, tipo_usuario)
+            editar_materia(emailusuario, materias, tipo_usuario, usuario_logado)
         elif (opcao == '5'):
-            interacoes.comentar_materia(emailusuario, materias, tipo_usuario)
+            interacoes.comentar_materia(emailusuario, materias, tipo_usuario, usuario_logado)
         elif (opcao == '6'):
             comentario = input('Digite o termo para busca: ')
-            geral.buscar_materias(materias, tipo_usuario, comentario)
+            geral.buscar_materias(materias, tipo_usuario, comentario, usuario_logado)
         elif (opcao == '7'):
-            geral.salvar_arquivo(materias, emailusuario, tipo_usuario)
+            geral.salvar_arquivo(materias, emailusuario)
         elif (opcao == '8'):
+            del usuario_logado[0]
             print('Saindo do sistema')
             break
         else:
             print('Opção inválida. Selecione novamente')
 
 
-def sub_materias(emailusuario, materias, tipo_usuario):
+def sub_materias(emailusuario, materias, tipo_usuario, usuario_logado):
     while True:
 
         print("-" * 42)
@@ -56,7 +58,7 @@ def sub_materias(emailusuario, materias, tipo_usuario):
         op = int(input('Digite uma opção: '))
 
         if (op == 1):
-            geral.listar_materias(materias, tipo_usuario)
+            geral.listar_materias(materias, tipo_usuario, usuario_logado)
 
             print("-" * 36)
             print('| 1 - Curtir notícia               |')
@@ -67,23 +69,23 @@ def sub_materias(emailusuario, materias, tipo_usuario):
             op = int(input(f'\nDigite uma opção: '))
 
             if (op == 1):
-                interacoes.curtir_materia(emailusuario, materias, tipo_usuario)
+                interacoes.curtir_materia(emailusuario, materias, tipo_usuario, usuario_logado)
                 break
             elif (op == 2):
-                interacoes.organizar_mais_curtidas(materias, tipo_usuario)
+                interacoes.organizar_mais_curtidas(materias, tipo_usuario, usuario_logado)
             elif (op == 3):
                 break
             else:
                 print('Opção Invalida')
 
         elif (op == 2):
-            minhas_materias(materias, tipo_usuario, emailusuario)
+            minhas_materias(materias, tipo_usuario, emailusuario, usuario_logado)
 
             print(f'\nDeseja organizar pelas mais curtidas? 1 - Sim | 2 - Não ')
             op = int(input(f'\nDigite uma opção: '))
 
             if (op == 1):
-                interacoes.organizar_mais_curtidas_user(materias, tipo_usuario, emailusuario)
+                interacoes.organizar_mais_curtidas_user(materias, tipo_usuario, emailusuario, usuario_logado)
                 break
             elif (op == 2):
                 break
@@ -144,9 +146,9 @@ def excluir_materia(emailusuario, materias, tipo_usuario):
     print(f'Noticia com ID {id_a_excluir} não encontrada. ')
 
 
-def editar_materia(emailusuario, materias, tipo_usuario):
+def editar_materia(emailusuario, materias, tipo_usuario, usuario_logado):
 
-    geral.listar_materias(materias, tipo_usuario)
+    geral.listar_materias(materias, tipo_usuario, usuario_logado)
 
     id_a_editar = input('Qual id da matéria a ser editada: ')
 
@@ -178,7 +180,7 @@ def editar_materia(emailusuario, materias, tipo_usuario):
         print(f'Matéria com ID {id_a_editar} não encontrada')
 
 
-def minhas_materias(materias, tipo_usuario, emailusuario):
+def minhas_materias(materias, tipo_usuario, emailusuario, usuario_logado):
 
     for materia in materias:
         if (materia['autor'] == emailusuario):
@@ -191,7 +193,7 @@ def minhas_materias(materias, tipo_usuario, emailusuario):
             print(f"Conteúdo: {materia['conteudo']}")
 
             interacoes.exibirComentarios(materia)
-            interacoes.exibirCurtidas(materia, tipo_usuario)
+            interacoes.exibirCurtidas(materia, tipo_usuario, usuario_logado)
 
         else:
             print('Nenhuma materia a ser exibida')
