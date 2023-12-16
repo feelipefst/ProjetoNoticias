@@ -8,7 +8,6 @@ data_atual = date.today()
 
 
 def menu_jornalista(emailusuario, materias, idmateria, tipo_usuario, usuario_logado):
-    print('AQUI', usuario_logado)
     while True:
         print("-" * 30)
         print('|          Opções:           |')
@@ -19,7 +18,8 @@ def menu_jornalista(emailusuario, materias, idmateria, tipo_usuario, usuario_log
         print('| 5 - Comentar matérias      |')
         print('| 6 - Buscar matérias        |')
         print('| 7 - Salvar arquivo         |')
-        print('| 8 - Sair                   |')
+        print('| 8 - Imprimir arquivo       |')
+        print('| 9 - Sair                   |')
         print("-" * 30)
         opcao = input('Digite uma opção: ')
 
@@ -39,6 +39,8 @@ def menu_jornalista(emailusuario, materias, idmateria, tipo_usuario, usuario_log
         elif (opcao == '7'):
             geral.salvar_arquivo(materias, emailusuario)
         elif (opcao == '8'):
+            geral.imprimir_arquivo(materias, emailusuario)
+        elif (opcao == '9'):
             del usuario_logado[0]
             print('Saindo do sistema')
             break

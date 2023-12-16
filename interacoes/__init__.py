@@ -17,21 +17,24 @@ def curtir_materia(emailusuario, materias, tipo_usuario, usuario_logado):
     id_noticia_curtir = int(id_noticia_curtir)
 
     for materia in materias:
+
         if materia['id'] == id_noticia_curtir:
+
             if len(materia['curtidas']) > 0:
+
                 for i in materia['curtidas']:
-                    print('aoihddad', i)
-                    if emailusuario == i:
+                    if usuario_logado[0] == i:
                         print(f'Você já curtiu esta notícia anteriormente.')
                         return
                     else:
-                        materia['curtidas'].append(emailusuario)
+                        materia['curtidas'].append(usuario_logado[0])
                         print('Curtida adicionada com sucesso')
                         break
             else:
-                materia['curtidas'].append(emailusuario)
+                materia['curtidas'].append(usuario_logado[0])
                 print('Curtida adicionada com sucesso')
                 break
+            break
 
     else:
         print(f'Matéria com ID {id_noticia_curtir} não encontrada.')
@@ -53,6 +56,7 @@ def comentar_materia(emailusuario, materias, tipo_usuario, usuario_logado):
     id_a_comentar = int(id_a_comentar)
 
     for materia in materias:
+
         if materia['id'] == id_a_comentar:
             comentario = input('Digite seu comentário: ')
 
@@ -60,8 +64,8 @@ def comentar_materia(emailusuario, materias, tipo_usuario, usuario_logado):
 
             print('Comentário adicionado com sucesso.')
             return
-        else:
-            print(f'Notícia com ID {id_a_comentar} não encontrada.')
+    else:
+        print(f'Notícia com ID {id_a_comentar} não encontrada.')
 
 
 def exibirComentarios(materias):
